@@ -18,8 +18,6 @@ public class JobPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    // FK -> companies(id)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
@@ -39,13 +37,12 @@ public class JobPost {
     @Column(name = "salary", length = 255)
     private String salary;
 
-    // jobType Enum('FULL_TIME','PART_TIME','REMOTE','INTERNSHIP')
     @Enumerated(EnumType.STRING)
     @Column(name = "jobType", nullable = false, length = 20)
-    private JobTYPE jobType;   // Đổi tên enum cho chuẩn
+    private JobTYPE jobType;
 
     @Column(name = "postedDate")
-    private Date postedDate; // nếu DB tự default CURRENT_TIMESTAMP thì có thể để null lúc insert
+    private Date postedDate;
 
     @Column(name = "updated_at")
     private Date updatedAt;

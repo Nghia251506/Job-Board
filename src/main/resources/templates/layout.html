@@ -92,17 +92,14 @@
 <body>
 <div class="page-wrap ">
     <div class="main d-flex">
-        <!-- sidebar trái -->
         <div th:replace="~{fragments/common :: sidebar}"></div>
 
-        <!-- content phải -->
         <main class="content p-3">
-            <!-- chỗ inject nội dung trang con -->
             <div th:replace="${content}"></div>
         </main>
     </div>
 
-    <!-- footer cuối trang -->
+
     <div th:replace="~{fragments/common :: footer}"></div>
 </div>
 

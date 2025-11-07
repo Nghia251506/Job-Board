@@ -25,7 +25,6 @@
 
             <div class="card-body">
 
-                <!-- ✅ EMPTY STATE: Page hoặc List đều xử lý -->
                 <div th:if="${companies == null
                      or (companies instanceof T(org.springframework.data.domain.Page) ? companies.totalElements == 0
                                                                                       : #lists.isEmpty(companies))}"
@@ -62,7 +61,6 @@
                                 <a th:href="${c.website}" th:text="${c.website}" target="_blank" rel="noopener">Website</a>
                             </td>
                             <td>
-                                <!-- ✅ dùng c.id thay vì s.id -->
                                 <a th:href="@{/companies/edit/{id}(id=${c.id})}" class="btn btn-warning btn-sm">Sửa</a>
                                 <a th:href="@{/companies/delete/{id}(id=${c.id})}" class="btn btn-danger btn-sm"
                                    onclick="return confirm('Xóa công ty này?')">Xóa</a>

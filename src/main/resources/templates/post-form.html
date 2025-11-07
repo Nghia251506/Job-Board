@@ -19,8 +19,6 @@
                 <form th:action="${jobpost.id == null} ? @{/jobposts} : @{/jobposts/{id}(id=${jobpost.id})}"
                       th:object="${jobpost}" method="post" novalidate>
                     <div class="row g-3">
-
-                        <!-- Company -->
                         <div class="col-md-6">
                             <label class="form-label">Công ty <span class="text-danger">*</span></label>
                             <select class="form-select"
@@ -38,8 +36,6 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('company')}"
                                  th:errors="*{company.id}">Công ty lỗi</div>
                         </div>
-
-                        <!-- Title -->
                         <div class="col-md-6">
                             <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
                             <input type="text" class="form-control"
@@ -49,8 +45,6 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}"
                                  th:errors="*{title}">Tiêu đề lỗi</div>
                         </div>
-
-                        <!-- Location -->
                         <div class="col-md-6">
                             <label class="form-label">Địa điểm <span class="text-danger">*</span></label>
                             <input type="text" class="form-control"
@@ -60,8 +54,6 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('location')}"
                                  th:errors="*{location}">Địa điểm lỗi</div>
                         </div>
-
-                        <!-- Salary -->
                         <div class="col-md-6">
                             <label class="form-label">Mức lương</label>
                             <input type="text" class="form-control"
@@ -71,8 +63,6 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('salary')}"
                                  th:errors="*{salary}">Lương lỗi</div>
                         </div>
-
-                        <!-- Job Type -->
                         <div class="col-md-6">
                             <label class="form-label">Hình thức <span class="text-danger">*</span></label>
                             <select class="form-select"
@@ -88,8 +78,6 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('jobType')}"
                                  th:errors="*{jobType}">Hình thức lỗi</div>
                         </div>
-
-                        <!-- Description -->
                         <div class="col-12">
                             <label class="form-label">Mô tả công việc <span class="text-danger">*</span></label>
                             <textarea class="form-control" rows="6"

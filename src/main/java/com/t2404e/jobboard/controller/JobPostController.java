@@ -34,7 +34,7 @@ public class JobPostController {
     public String list(
             @RequestParam(required = false) String q,
             @RequestParam(required = false) Long companyId,
-            @RequestParam(required = false) JobTYPE jobType,   // Enum; Spring tự convert từ chuỗi
+            @RequestParam(required = false) JobTYPE jobType,
             @PageableDefault(size = 10, sort = "postedDate", direction = Sort.Direction.DESC)
             Pageable pageable,
             Model model
@@ -48,13 +48,11 @@ public class JobPostController {
 
         model.addAttribute("jobposts", page);
         model.addAttribute("companies", companyRepository.findAll());
-
-        // giữ lại các giá trị filter để render lại form lọc + tạo link phân trang
         model.addAttribute("q", q);
         model.addAttribute("companyId", companyId);
         model.addAttribute("jobType", jobType == null ? null : jobType.name());
 
-        return "jobposts"; // chính là template bạn vừa yêu cầu
+        return "jobposts";
     }
     @GetMapping("/jobposts/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
