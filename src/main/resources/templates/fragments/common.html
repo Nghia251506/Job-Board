@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside th:fragment="sidebar" id="sidebar" class="sidebar bg-dark text-white">
+    <div class="d-flex align-items-center justify-content-between mb-3 px-3">
+        <a class="navbar-brand text-white text-decoration-none d-block m-0" th:href="@{/companies}">
+      <span class="brand-icon me-2">
+        <!-- icon đơn giản; dùng FA nếu có -->
+        <i class="fas fa-briefcase"></i>
+      </span>
+            <span class="label">Quản lý bài đăng tuyển dụng</span>
+        </a>
+        <button id="sbToggle" class="btn btn-sm btn-outline-light border-0" type="button" aria-label="Toggle sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <ul class="nav nav-pills flex-column mb-auto px-2">
+        <li class="nav-item">
+            <a class="nav-link text-white d-flex align-items-center gap-2" th:href="@{/companies}">
+                <i class="fas fa-building"></i>
+                <span class="label">Danh sách công ty</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white d-flex align-items-center gap-2" th:href="@{/jobposts}">
+                <i class="fas fa-file-alt"></i>
+                <span class="label">Danh sách bài viết</span>
+            </a>
+        </li>
+    </ul>
+</aside>
+<footer th:fragment="footer" class="footer bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background: rgba(0,0,0,.05);">
+        © 2025 • <a class="text-dark" href="#">CompanyJobPostWebApp.com</a>
+    </div>
+</footer>
+</body>
+
+
+</html>

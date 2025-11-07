@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<body>
+<div th:block th:replace="~{layout :: layout(
+      pageTitle=${'Công ty'},
+      content=~{::content}
+  )}">
+    <section th:fragment="content">
+        <h1>Danh sách công ty</h1>
+        <div class="card">
+            <div class="card-header d-flex align-items-center gap-2">
+                <a th:href="@{/companies/add}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Thêm công ty
+                </a>
+
+                <form class="ms-auto" th:action="@{/companies}" method="get" style="min-width:320px;">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q"
+                               placeholder="Tìm theo tên hoặc email" th:value="${q}">
+                        <button class="btn btn-primary" type="submit">Tìm</button>
+                        <a class="btn btn-outline-secondary" th:href="@{/companies}">Xóa</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-body">
+
+                <!-- ✅ EMPTY STATE: Page hoặc List đều xử lý -->
+                <div th:if="${companies == null
+                     or (companies instanceof T(org.springframework.data.domain.Page) ? companies.totalElements == 0
+                                                                                      : #lists.isEmpty(companies))}"
+                     class="text-center py-5">
+                    <img th:src="@{../static/images.png}" alt="No data" style="width:120px; opacity:.8;" class="mb-3">
+                    <p class="text-muted mb-0">Chưa có danh sách công ty nào</p>
+                </div>
+
+                <!-- ✅ TABLE khi có dữ liệu -->
+                <div th:unless="${companies == null
+                         or (companies instanceof T(org.springframework.data.domain.Page)
+                             ? companies.totalElements == 0
+                             : #lists.isEmpty(companies))}">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                        <tr>
+                            <th style="width:56px;">#</th>
+                            <th>Tên công ty</th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>Website</th>
+                            <th style="width:140px;">Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="c, stat : ${companies}">
+                            <td th:text="${(companies instanceof T(org.springframework.data.domain.Page))
+                ? (companies.number * companies.size + stat.index + 1)
+                : (stat.index + 1)}">1</td>
+                            <td th:text="${c.name}">Name</td>
+                            <td th:text="${c.address}">Address</td>
+                            <td th:text="${c.email}">Email</td>
+                            <td>
+                                <a th:href="${c.website}" th:text="${c.website}" target="_blank" rel="noopener">Website</a>
+                            </td>
+                            <td>
+                                <!-- ✅ dùng c.id thay vì s.id -->
+                                <a th:href="@{/companies/edit/{id}(id=${c.id})}" class="btn btn-warning btn-sm">Sửa</a>
+                                <a th:href="@{/companies/delete/{id}(id=${c.id})}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Xóa công ty này?')">Xóa</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav th:if="${companies instanceof T(org.springframework.data.domain.Page) and companies.totalPages > 1}">
+                        <ul class="pagination mb-0">
+                            <li class="page-item" th:classappend="${companies.first} ? ' disabled'">
+                                <a class="page-link"
+                                   th:href="@{/companies(page=${companies.number-1}, size=${companies.size}, q=${q}, website=${website}}">
+                                    &laquo;
+                                </a>
+                            </li>
+
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(0, companies.totalPages-1)}"
+                                th:classappend="${i == companies.number} ? ' active'">
+                                <a class="page-link"
+                                   th:text="${i + 1}"
+                                   th:href="@{/companies(page=${i}, size=${companies.size}, q=${q}, website=${website})}">1</a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${companies.last} ? ' disabled'">
+                                <a class="page-link"
+                                   th:href="@{/companies(page=${companies.number+1}, size=${companies.size}, q=${q}, website=${website})}">
+                                    &raquo;
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

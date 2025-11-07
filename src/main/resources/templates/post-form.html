@@ -1,0 +1,116 @@
+<!-- src/main/resources/templates/post-form.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<body>
+<div th:block th:replace="~{layout :: layout(
+      pageTitle=${(jobpost != null && jobpost.id != null) ? 'Sửa Job Post' : 'Thêm Job Post'},
+      content=~{::content}
+)}">
+    <section th:fragment="content">
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0" th:text="${(jobpost != null && jobpost.id != null) ? 'Sửa Job Post' : 'Thêm Job Post'}">
+                    Thêm Job Post
+                </h5>
+                <a th:href="@{/jobposts}" class="btn btn-outline-secondary btn-sm">Quay lại danh sách</a>
+            </div>
+
+            <div class="card-body">
+                <form th:action="${jobpost.id == null} ? @{/jobposts} : @{/jobposts/{id}(id=${jobpost.id})}"
+                      th:object="${jobpost}" method="post" novalidate>
+                    <div class="row g-3">
+
+                        <!-- Company -->
+                        <div class="col-md-6">
+                            <label class="form-label">Công ty <span class="text-danger">*</span></label>
+                            <select class="form-select"
+                                    th:field="*{company.id}"
+                                    th:classappend="${#fields.hasErrors('company')}? ' is-invalid'">
+                                <option value="" disabled
+                                        th:selected="${jobpost.company == null || jobpost.company.id == null}">
+                                    -- Chọn công ty --
+                                </option>
+                                <option th:each="c : ${companies}"
+                                        th:value="${c.id}"
+                                        th:text="${c.name}">
+                                </option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('company')}"
+                                 th:errors="*{company.id}">Công ty lỗi</div>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="col-md-6">
+                            <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   th:field="*{title}"
+                                   placeholder="VD: Backend Java Developer"
+                                   th:classappend="${#fields.hasErrors('title')}? ' is-invalid'">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}"
+                                 th:errors="*{title}">Tiêu đề lỗi</div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="col-md-6">
+                            <label class="form-label">Địa điểm <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   th:field="*{location}"
+                                   placeholder="Hà Nội / TP.HCM / Remote"
+                                   th:classappend="${#fields.hasErrors('location')}? ' is-invalid'">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('location')}"
+                                 th:errors="*{location}">Địa điểm lỗi</div>
+                        </div>
+
+                        <!-- Salary -->
+                        <div class="col-md-6">
+                            <label class="form-label">Mức lương</label>
+                            <input type="text" class="form-control"
+                                   th:field="*{salary}"
+                                   placeholder="VD: 20–35 triệu / tháng"
+                                   th:classappend="${#fields.hasErrors('salary')}? ' is-invalid'">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('salary')}"
+                                 th:errors="*{salary}">Lương lỗi</div>
+                        </div>
+
+                        <!-- Job Type -->
+                        <div class="col-md-6">
+                            <label class="form-label">Hình thức <span class="text-danger">*</span></label>
+                            <select class="form-select"
+                                    th:field="*{jobType}"
+                                    th:classappend="${#fields.hasErrors('jobType')}? ' is-invalid'">
+                                <option value="" disabled
+                                        th:selected="${jobpost.jobType == null}">-- Chọn hình thức --</option>
+                                <option value="FULL_TIME">Full-time</option>
+                                <option value="PART_TIME">Part-time</option>
+                                <option value="REMOTE">Remote</option>
+                                <option value="INTERNSHIP">Internship</option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('jobType')}"
+                                 th:errors="*{jobType}">Hình thức lỗi</div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-12">
+                            <label class="form-label">Mô tả công việc <span class="text-danger">*</span></label>
+                            <textarea class="form-control" rows="6"
+                                      th:field="*{description}"
+                                      placeholder="Mô tả nhiệm vụ, yêu cầu, quyền lợi..."
+                                      th:classappend="${#fields.hasErrors('description')}? ' is-invalid'"></textarea>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}"
+                                 th:errors="*{description}">Mô tả lỗi</div>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary"
+                                th:text="${jobpost.id != null ? 'Cập nhật' : 'Lưu'}">Lưu</button>
+                        <a th:href="@{/jobposts}" class="btn btn-outline-secondary">Hủy</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

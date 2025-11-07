@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<body>
+<div th:block th:replace="~{layout :: layout(
+      pageTitle=${p.title},
+      content=~{::content}
+)}">
+    <section th:fragment="content">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0" th:text="${p.title}"></h5>
+                <a th:href="@{/jobposts}" class="btn btn-outline-secondary btn-sm">Quay lại danh sách</a>
+            </div>
+
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-3">Công ty</dt>
+                    <dd class="col-sm-9" th:text="${p.company != null ? p.company.name : '—'}">Công ty ABC</dd>
+
+                    <dt class="col-sm-3">Hình thức</dt>
+                    <dd class="col-sm-9" th:text="${p.jobType}">FULL_TIME</dd>
+
+                    <dt class="col-sm-3">Địa điểm</dt>
+                    <dd class="col-sm-9" th:text="${p.location}">Hà Nội</dd>
+
+                    <dt class="col-sm-3">Mức lương</dt>
+                    <dd class="col-sm-9" th:text="${p.salary}">20–35 triệu</dd>
+
+                    <dt class="col-sm-3">Ngày đăng</dt>
+                    <dd class="col-sm-9" th:date="${#temporals.format(p.postedDate, 'dd/MM/yyyy HH:mm')}">01/11/2025 10:00</dd>
+
+                    <dt class="col-sm-3">Mô tả</dt>
+                    <dd class="col-sm-9">
+                        <pre class="mb-0" th:text="${p.description}">Mô tả...</pre>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="card-footer d-flex gap-2">
+                <a th:href="@{/jobposts/edit/{id}(id=${p.id})}" class="btn btn-warning">Sửa</a>
+                <a th:href="@{/jobposts/delete/{id}(id=${p.id})}" class="btn btn-danger"
+                   onclick="return confirm('Xóa job post này?')">Xóa</a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
